@@ -1,0 +1,17 @@
+[user]
+	name = LegendarySSS
+	email = 1209037242@qq.com
+[alias]
+	a = add .
+        s = status
+        br = branch
+	bra = branch -a
+        cm = commit -m
+        ck = checkout
+        l = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative"
+        pl = pull
+        ph = push
+        stl = stash list
+        st = stash
+        sta = stash apply
+	
