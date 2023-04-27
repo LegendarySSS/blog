@@ -1,7 +1,8 @@
+import Image from 'next/legacy/image';
 import { BsGithub } from 'react-icons/bs';
 import { FaRegLightbulb } from 'react-icons/fa';
 import { MdOutlineArticle } from 'react-icons/md';
-import { SiBilibili } from 'react-icons/si';
+import { SiWechat } from 'react-icons/si';
 
 import ThemeButton from '@/components/buttons/ThemeButton';
 import UnstyledLink from '@/components/links/UnstyledLink';
@@ -16,19 +17,16 @@ const Icon = () => {
         <FaRegLightbulb />
       </UnstyledLink>
       <a
-        href='https://github.com/Chocolate1999'
+        href='https://github.com/LegendarySSS'
         rel='noreferrer'
         target='_blank'
       >
         <BsGithub />
       </a>
-      <a
-        href='https://space.bilibili.com/351534170'
-        rel='noreferrer'
-        target='_blank'
-      >
-        <SiBilibili />
+      <a className="hover:opacity-100">
+        <SiWechat />
       </a>
+      <Image src="https://i.ibb.co/pfyHcqD/141682592143-pic.jpg" alt="" layout="fill" className="opacity-0 transition duration-300 absolute  z-[-1]" />
       <ThemeButton />
     </div>
   );

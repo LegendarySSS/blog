@@ -2,17 +2,17 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 const defaultMeta = {
-  title: '一百个Chocolate',
-  siteName: '一百个Chocolate',
+  title: '前端大杂烩',
+  siteName: '前端大杂烩',
   description:
-    'Chocolate 个人博客，JS，TS，LeetCode，Vue，React，算法爱好者。座右铭：学如逆水行舟，不进则退！',
+    'js、ts、vue、react、前端技术和趋势探索，前端框架和库的比较和评估指南，前端性能优化和最佳实践指南，前端设计和用户体验实践，前端开发工具和技巧分享。',
   keywords:
-    'Chocolate 个人博客，JS，TS，LeetCode，Vue，React，算法爱好者。座右铭：学如逆水行舟，不进则退！',
+    'js、ts、vue、react、前端技术和趋势探索，前端框架和库的比较和评估指南，前端性能优化和最佳实践指南，前端设计和用户体验实践，前端开发工具和技巧分享。',
   /** Without additional '/' on the end */
-  url: 'https://blog.yangchaoyi.vip',
+  url: 'https://zhuminghao.netlify.app/',
   type: 'website',
   robots: 'follow, index',
-  image: 'https://help-assets.codehub.cn/enterprise/guanwang/favicon.ico',
+  image: 'https://github.com/reactchina/react-china-logo/raw/master/react-china-logo@500w.png',
 };
 
 type SeoProps = {

@@ -4,15 +4,15 @@ export const navAtom = atom({
   key: 'NAV_ATOM',
   default: [
     {
-      name: 'Home',
+      name: '首页',
       link: '/',
     },
     {
-      name: 'Blog',
+      name: '知识分享',
       link: '/blog',
     },
     {
-      name: 'Projects',
+      name: '零散的想法',
       link: '/projects',
     },
   ],

@@ -6,10 +6,11 @@ module.exports = {
 
   // Uncoment to add domain whitelist
   images: {
-    domains: ['res.cloudinary.com'],
+    domains: ['res.cloudinary.com', 'i.ibb.co'],
   },
 };
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const intercept = require('intercept-stdout');
 
 // safely ignore recoil stdout warning messages

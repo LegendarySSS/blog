@@ -22,7 +22,7 @@ export default function HomePage() {
                   className='mb-8 text-4xl text-[#555] dark:text-[#bbb] mb:text-3xl'
                   data-fade='1'
                 >
-                  一百个Chocolate
+                  大前端时代下的一些想法
                 </p>
                 <p
                   className='text-lg text-[#555] dark:text-[#bbb]'
