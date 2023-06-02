@@ -1,0 +1,40 @@
+---
+title: Service Worker - 提高 Web 应用程序的性能和离线体验
+description: Service Worker
+publishedAt: '2023-02-02'
+lastUpdated: '2023-02-04'
+tags: 'interview'
+---
+
+## 概念
+
+当你第一次听到 Service Worker 的时候，你可能会感到有些困惑。它是什么？它有什么用处？它是如何工作的？
+
+当你第一次访问一个网站时，你的浏览器会下载所有的 HTML、CSS 和 JavaScript 文件，这些文件会被缓存到你的本地计算机中。这样，当你再次访问该网站时，这些文件就可以从缓存中加载，而不需要再次下载。这种方式可以提高网站的加载速度，但是如果网站的文件更新了，你的浏览器可能会继续加载旧的文件，导致网站出现问题。
+
+为了解决这个问题，Service Worker 应运而生......
+
+## 什么是 Service Worker？
+
+Service Worker 是一种 Web Worker，它是一种在后台运行的 JavaScript 线程，可以拦截和处理网络请求。它可以在离线时缓存资源，以便在离线时仍然可以访问应用程序。它还可以提高应用程序的性能，因为它可以缓存资源并在下一次访问时直接从缓存中提供资源，而不必再次从网络中下载。
+
+## 如何使用 Service Worker？
+
+要使用 Service Worker，您需要在您的应用程序中注册它。您可以使用以下代码在您的应用程序中注册 Service Worker：
+
+```javascript
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker
+      .register('/sw.js')
+      .then((registration) => {
+        console.log('Service Worker registered: ', registration);
+      })
+      .catch((registrationError) => {
+        console.log('Service Worker registration failed: ', registrationError);
+      });
+  });
+}
+```
+
+这段代码会检查浏览器是否支持 Service Worker，如果支持，就在页面加载完成后注册一个 Service Worker。在注册 Service Worker 时，你需要指定 Service Worker 脚本的路径，这里我指定的是`/service-worker.js`。当 Service Worker 注册成功时，会输出一条日志，表示 Service Worker 已经注册成功。

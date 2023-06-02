@@ -12,7 +12,7 @@ export const navAtom = atom({
       link: '/blog',
     },
     {
-      name: '零散的想法',
+      name: '思维碎片',
       link: '/projects',
     },
   ],

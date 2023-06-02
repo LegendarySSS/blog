@@ -22,14 +22,13 @@ export default function HomePage() {
                   className='mb-8 text-4xl text-[#555] dark:text-[#bbb] mb:text-3xl'
                   data-fade='1'
                 >
-                  大前端时代下的一些想法
+                  前端艺术的探索与实践
                 </p>
                 <p
                   className='text-lg text-[#555] dark:text-[#bbb]'
                   data-fade='1'
                 >
-                  Hey, I am Chocolate, the 21st front-end development, currently
-                  moving bricks in a large factory.
+                  前端技术的发展不仅仅是为了实现功能，更是为了创造艺术。
                 </p>
                 <p
                   className={clsxm(
@@ -38,7 +37,7 @@ export default function HomePage() {
                   )}
                   data-fade='3'
                 >
-                  JS, TS, LeetCode, Vue, React, algorithm lovers.
+                  在大前端时代下，技术的更新换代非常快，我们需要不断学习新的技术，才能跟上时代的步伐。同时，我们也需要不断思考技术的发展方向，以及技术对于社会的影响。
                 </p>
                 <hr
                   className='mx-auto my-[2em] h-0 w-[50px] border-t-[1px] border-[#7d7d7d4d] mb:my-[1em]'
@@ -51,9 +50,7 @@ export default function HomePage() {
                   )}
                   data-fade='3'
                 >
-                  After experiencing high school life, I understand that
-                  "fortunately, the cold window has been bitter for several
-                  years, and since then there are many warm springs"
+                  同时，我们也需要关注前端艺术对于用户体验的影响，以及如何在艺术与实用性之间取得平衡。在技术的发展过程中，我们也需要关注技术的可持续性，以及技术对于环境的影响。
                 </p>
                 <p
                   className={clsxm(
@@ -62,9 +59,7 @@ export default function HomePage() {
                   )}
                   data-fade='3'
                 >
-                  And through college life, I understand that "learning is like
-                  sailing against the current, if you don't advance, you will
-                  retreat".
+                  因此，作为一名前端开发者，我们需要不断学习、思考、创新，才能在前端艺术的探索与实践中不断前行。
                 </p>
                 <p
                   className={clsxm(
@@ -73,8 +68,7 @@ export default function HomePage() {
                   )}
                   data-fade='3'
                 >
-                  The dream is to become a person with a certain influence,
-                  sweat with blood, and create the future with positivity!
+                  不要停止学习，不要停止探索，不要停止创新。只有不断前行，才能不断超越自我。
                 </p>
                 <hr
                   className='mx-auto my-[2em] h-0 w-[50px] border-t-[1px] border-[#7d7d7d4d] mb:my-[1em]'
@@ -87,13 +81,13 @@ export default function HomePage() {
                   )}
                   data-fade='4'
                 >
-                  Find me on{' '}
-                  <CustomLink href='https://github.com/Chocolate1999'>
+                  内容将持续更新... Find me on{' '}
+                  <CustomLink href='https://github.com/LegendarySSS'>
                     Github
                   </CustomLink>{' '}
                   and{' '}
-                  <CustomLink href='https://space.bilibili.com/351534170'>
-                    哔哩哔哩
+                  <CustomLink href='https://gitee.com/zmhmysong'>
+                    Gitee
                   </CustomLink>
                   .
                 </p>
@@ -105,14 +99,14 @@ export default function HomePage() {
                   )}
                   data-fade='4'
                 >
-                  Motto: Learning is like sailing against the current, if you
-                  don't advance, you will retreat!
+                  Learning is like sailing against the current, if you don't
+                  advance, you will retreat!
                 </p>
 
                 <div data-fade='5' className='mt-4 flex'>
-                  <CustomLink href='/blog'>To Blog</CustomLink>
+                  <CustomLink href='/blog'>学习交流</CustomLink>
                   <CustomLink href='/projects' className='ml-6'>
-                    To Projects
+                    思维碎片
                   </CustomLink>
                 </div>
               </div>

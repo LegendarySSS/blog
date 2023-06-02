@@ -35,8 +35,8 @@ export default function CustomCode(props: React.ComponentPropsWithRef<'code'>) {
       )}
 
       {language && (
-        <div className='absolute top-0 left-6 rounded-b-md border border-t-0 border-gray-600 px-3 py-1'>
-          <span className='select-none bg-gradient-to-tr from-primary-300 to-primary-400 bg-clip-text font-medium'>
+        <div className='absolute top-0 left-0 rounded-b-md border border-t-0 border-gray-600 px-2'>
+          <span className='select-none bg-gradient-to-tr from-primary-300 to-primary-400 bg-clip-text text-xs font-medium'>
             {language}
           </span>
         </div>

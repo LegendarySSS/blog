@@ -4,7 +4,6 @@ import { getMDXComponent } from 'mdx-bundler/client';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import * as React from 'react';
 import { HiOutlineClock, HiOutlineEye } from 'react-icons/hi';
-import { MdHistory } from 'react-icons/md';
 
 import { trackEvent } from '@/lib/analytics';
 import { cleanBlogPrefix } from '@/lib/helper';
@@ -22,7 +21,6 @@ import TableOfContents, {
 } from '@/components/content/TableOfContents';
 import Layout from '@/components/layout/Layout';
 import CustomLink from '@/components/links/CustomLink';
-import UnstyledLink from '@/components/links/UnstyledLink';
 import Seo from '@/components/Seo';
 import Tooltip from '@/components/Tooltip';
 
@@ -43,12 +41,6 @@ export default function SingleBlogPage({
     'blog',
     recommendations
   );
-
-  //#region  //*=========== Link Constants ===========
-  const COMMIT_HISTORY_LINK = `https://github.com/Chocolate1999/nextjs-tailwind-blog/commits/main/src/contents/blog/${frontmatter.slug}.mdx`;
-  const GITHUB_EDIT_LINK = `https://github.com/Chocolate1999/nextjs-tailwind-blog/blob/main/src/contents/blog/${frontmatter.slug}.mdx`;
-  const OG_BANNER_LINK = `https://res.cloudinary.com/chocolate1999/image/upload/f_auto,c_fill,ar_4:5,w_1200/chocolate1999/banner/${frontmatter.banner}`;
-  //#endregion  //*======== Link Constants ===========
 
   //#region  //*=========== Blog Language ===========
   const cleanSlug = cleanBlogPrefix(frontmatter.slug);
@@ -87,7 +79,6 @@ export default function SingleBlogPage({
         templateTitle={frontmatter.title}
         description={frontmatter.description}
         isBlog
-        banner={OG_BANNER_LINK}
         date={new Date(
           frontmatter.lastUpdated ?? frontmatter.publishedAt
         ).toISOString()}
@@ -116,17 +107,6 @@ export default function SingleBlogPage({
                       )}
                       .
                     </span>
-                    <UnstyledLink
-                      href={COMMIT_HISTORY_LINK}
-                      className={clsx(
-                        'inline-flex items-center gap-1 rounded-sm font-medium',
-                        'text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-primary-300',
-                        'focus:outline-none focus-visible:ring focus-visible:ring-primary-300'
-                      )}
-                    >
-                      <MdHistory className='text-lg' />
-                      <span>See changes</span>
-                    </UnstyledLink>
                   </div>
                 )}
                 <div className='my-2 flex items-center justify-start gap-2 text-sm font-medium text-gray-600 dark:text-gray-300'>
@@ -205,10 +185,7 @@ export default function SingleBlogPage({
             )}
 
             <div className='mt-8 flex flex-row-reverse items-start justify-between gap-4'>
-              <CustomLink href={GITHUB_EDIT_LINK}>
-                Edit this on GitHub
-              </CustomLink>
-              <CustomLink href='/blog'>← Back to blog</CustomLink>
+              <CustomLink href='/blog'>← Back</CustomLink>
             </div>
           </div>
         </section>

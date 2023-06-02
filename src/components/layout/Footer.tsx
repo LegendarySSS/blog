@@ -19,11 +19,11 @@ export default function Footer() {
             className='pl-1'
             rel='noreferrer'
           >
-            © Yang Chao Yi
+            © MingHao Zhu
           </a>
         </div>
         <CustomLink href='https://beian.miit.gov.cn/'>
-          湘ICP备20002952号
+          京ICP备20002952号
         </CustomLink>
       </section>
     </footer>
