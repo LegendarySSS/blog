@@ -1,4 +1,5 @@
 import Link, { LinkProps } from 'next/link';
+import { useRouter } from 'next/router';
 import * as React from 'react';
 
 import clsxm from '@/lib/clsxm';
@@ -13,10 +14,12 @@ export type UnstyledLinkProps = {
 
 const UnstyledLink = React.forwardRef<HTMLAnchorElement, UnstyledLinkProps>(
   ({ children, href, openNewTab, className, nextLinkProps, ...rest }, ref) => {
+    const router = useRouter();
     const isNewTab =
       openNewTab !== undefined
         ? openNewTab
         : href && !href.startsWith('/') && !href.startsWith('#');
+    const isActive = router.asPath === href;
 
     if (!isNewTab) {
       return (
@@ -25,7 +28,7 @@ const UnstyledLink = React.forwardRef<HTMLAnchorElement, UnstyledLinkProps>(
           {...nextLinkProps}
           ref={ref}
           {...rest}
-          className={className}
+          className={clsxm(className, isActive && 'text-blue-500 font-bold')}
         >
           {children}
         </Link>
@@ -39,7 +42,11 @@ const UnstyledLink = React.forwardRef<HTMLAnchorElement, UnstyledLinkProps>(
         rel='noopener noreferrer'
         href={href}
         {...rest}
-        className={clsxm('cursor-pointer', className)}
+        className={clsxm(
+          'cursor-pointer',
+          className,
+          isActive && 'text-blue-500 font-bold'
+        )}
       >
         {children}
       </a>

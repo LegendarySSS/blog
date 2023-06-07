@@ -2,17 +2,18 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 const defaultMeta = {
-  title: '前端大杂烩',
-  siteName: '前端大杂烩',
+  title: 'MingHaoのBlog',
+  siteName: 'MingHaoのBlog',
   description:
-    'js、ts、vue、react、前端技术和趋势探索，前端框架和库的比较和评估指南，前端性能优化和最佳实践指南，前端设计和用户体验实践，前端开发工具和技巧分享。',
+    'js、ts、vue、react、前端技术和趋势探索，前端框架和库的比较和评估指南，前端性能优化和最佳实践指南，前端设计和用户体验实践，前端开发工具和技巧分享。树洞、笔记、隐私、分享、心情、生活、情感、成长、记录、思考',
   keywords:
-    'js、ts、vue、react、前端技术和趋势探索，前端框架和库的比较和评估指南，前端性能优化和最佳实践指南，前端设计和用户体验实践，前端开发工具和技巧分享。',
+    'js、ts、vue、react、前端技术和趋势探索，前端框架和库的比较和评估指南，前端性能优化和最佳实践指南，前端设计和用户体验实践，前端开发工具和技巧分享。树洞、笔记、隐私、分享、心情、生活、情感、成长、记录、思考',
   /** Without additional '/' on the end */
   url: 'https://zhuminghao.netlify.app/',
   type: 'website',
   robots: 'follow, index',
-  image: 'https://github.com/reactchina/react-china-logo/raw/master/react-china-logo@500w.png',
+  image:
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNVi6qmBJ_clLNGGYqOSiA3z0D9Tu-j9mPAw&usqp=CAU',
 };
 
 type SeoProps = {
