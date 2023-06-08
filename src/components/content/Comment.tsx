@@ -8,10 +8,10 @@ export default function Comment() {
   return (
     <Giscus
       key={theme}
-      repo='Chocolate1999/nextjs-tailwind-blog'
-      repoId='R_kgDOHuqHfA'
+      repo='LegendarySSS/blog-demo'
+      repoId='R_kgDOJcAK5g'
       category='General'
-      categoryId='DIC_kwDOHuqHfM4CQqq4'
+      categoryId='DIC_kwDOJcAK5s4CXDzE'
       mapping='pathname'
       reactionsEnabled='0'
       emitMetadata='0'

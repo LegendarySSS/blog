@@ -12,7 +12,7 @@ const HeaderNav = () => {
       {navVal.map((item) => {
         return (
           <div key={item.name}>
-            <UnstyledLink href={item.link}>
+            <UnstyledLink key={item.link} href={item.link}>
               <span className='hover:text-[#0066ff] dark:text-gray-100'>
                 {item.name}
               </span>

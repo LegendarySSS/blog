@@ -3,7 +3,7 @@ title: Service Worker - 提高 Web 应用程序的性能和离线体验
 description: Service Worker
 publishedAt: '2023-02-02'
 lastUpdated: '2023-02-04'
-tags: 'interview'
+tags: '性能优化'
 ---
 
 ## 概念
@@ -37,4 +37,103 @@ if ('serviceWorker' in navigator) {
 }
 ```
 
-这段代码会检查浏览器是否支持 Service Worker，如果支持，就在页面加载完成后注册一个 Service Worker。在注册 Service Worker 时，你需要指定 Service Worker 脚本的路径，这里我指定的是`/service-worker.js`。当 Service Worker 注册成功时，会输出一条日志，表示 Service Worker 已经注册成功。
+安装成功后，使用 self.skipWaiting() 方法跳过等待状态，立即激活 Service Worker。
+
+```javascript
+self.addEventListener('install', function (event) {
+  event.waitUntil(
+    caches.open('my-cache').then(function (cache) {
+      return cache.addAll([
+        '/',
+        '/index.html',
+        '/styles/main.css',
+        '/scripts/main.js',
+      ]);
+    })
+  );
+  self.skipWaiting();
+});
+```
+
+激活成功后，使用 self.clients.claim() 方法立即接管所有客户端。
+
+```javascript
+self.addEventListener('activate', function (event) {
+  event.waitUntil(
+    caches.keys().then(function (cacheNames) {
+      return Promise.all(
+        cacheNames.map(function (cacheName) {
+          if (cacheName !== 'my-cache') {
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
+  );
+  self.clients.claim();
+});
+```
+
+到这一步，Service Worker 可以缓存资源并在离线时提供缓存中的资源，从而实现离线化。需要注意的是，缓存的资源可能会过期或被删除，需要定期更新缓存，并确保应用程序可以处理缓存失效的情况。
+
+## 请求缓存
+
+当 Service Worker 注册成功后，它会开始拦截网络请求。您可以使用 Service Worker 的 fetch 事件来拦截网络请求并对其进行处理。例如，您可以使用 fetch 事件来缓存资源，以便在下一次访问时可以直接从缓存中提供资源。
+
+以下是一个使用 Service Worker 缓存资源的示例：
+
+```javascript
+// 监听 fetch 事件，拦截网络请求并进行处理
+self.addEventListener('fetch', (event) => {
+  // 使用缓存响应
+  event.respondWith(
+    caches.match(event.request).then((response) => {
+      // 如果缓存中有响应，则直接返回缓存中的响应
+      if (response) {
+        return response;
+      }
+
+      // 如果缓存中没有响应，则发起网络请求
+      return fetch(event.request).then((response) => {
+        // 如果响应为空，或者状态码不为 200，或者响应类型不是基本类型，则直接返回响应
+        if (!response || response.status !== 200 || response.type !== 'basic') {
+          return response;
+        }
+
+        // 克隆响应，因为响应是流，只能被消耗一次，所以需要克隆一份用于缓存
+        const responseToCache = response.clone();
+
+        // 将响应缓存到 my-cache 中
+        caches.open('my-cache').then((cache) => {
+          cache.put(event.request, responseToCache);
+        });
+
+        // 返回响应
+        return response;
+      });
+    })
+  );
+});
+```
+
+## 使用感受
+
+Service Worker 是一个非常强大的工具，可以帮助我们实现离线化、提高应用程序性能等功能。使用 Service Worker 可以让应用程序更加灵活、可靠、快速。
+
+## 注意事项
+
+- 只能在 HTTPS 和 localhost 网站上使用，因为它需要使用安全的连接来保护用户的隐私和安全。
+
+- 只能在支持它的浏览器上使用，需要检查浏览器是否支持 Service Worker，可以参考 [Can I Use](https://caniuse.com/?search=Service%20Worker)
+
+- 只能在注册它的域名下运行，需要将 Service Worker 文件放置在与应用程序相同的域名下。
+
+- 不能访问 DOM，因此它不能直接操作页面上的元素。如果需要在 Service Worker 中操作 DOM，需要使用 `postMessage` 与页面通信。
+
+- Service Worker 可以缓存资源，但是缓存的资源可能会过期或被删除，需要定期更新缓存，并确保应用程序可以处理缓存失效的情况。
+
+- Service Worker 可以拦截和处理网络请求，但是它不能拦截和处理所有类型的网络请求，例如 WebSocket 和 WebRTC 请求。
+
+- Service Worker 可以在后台运行，但是它不能无限制地运行。浏览器可能会在某些情况下终止 Service Worker，例如当系统内存不足时。
+
+- Service Worker 可以在离线时缓存资源，但是它不能缓存所有资源。需要仔细选择要缓存的资源，并确保它们可以在离线时正常工作。
