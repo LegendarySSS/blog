@@ -168,7 +168,7 @@ export default function SingleBlogPage({
 
             {populatedRecommendations.length > 0 && (
               <div className='mt-20 dark:text-gray-200'>
-                <h2>Other posts that you might like</h2>
+                <h2>你可能对以下内容感兴趣</h2>
                 <ul className='mt-4 grid grid-cols-1 gap-4'>
                   {populatedRecommendations.map((post, i) => (
                     <BlogCard

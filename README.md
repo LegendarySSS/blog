@@ -4,10 +4,6 @@
 用Nextjs和tailwindcss构建的现代最美丽的极简主义博客
 </p>
 <p align="center">
- 原作者
- <a href="https://github.com/chonext/blog">Chocolate1999</a>
-</p>
-<p align="center">
  🧑‍💻👩‍💻👨‍💻
 </p>
 
