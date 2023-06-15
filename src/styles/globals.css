@@ -30,7 +30,9 @@
   --c-scrollbar-hover: #bbb;
   /* #endregion  /**======== Primary Color =========== */
 }
-
+html {
+  cursor: url('../../public/images/cursor.svg'), auto;
+}
 html.dark {
   --c-bg: #050505;
   --c-scrollbar: #111;

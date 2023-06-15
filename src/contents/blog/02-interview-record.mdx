@@ -28,4 +28,89 @@ tags: '面试'
 
 ### 问：那请说一下常见的 hooks 以及使用场景以及 react18 的新特性有哪些了解？
 
-我：
+我：常用的有 useState、useEffect、useContext、useMemo、useCallback、useRef、useReducer。
+
+- useState：用于在函数组件中添加状态管理。
+- useEffect：用于在函数组件中处理副作用，比如访问 DOM、网络请求等。
+- useContext：用于在函数组件中访问全局的上下文信息。
+- useReducer：用于在函数组件中进行复杂的状态管理，同 redux 中的 reducer 相似。
+- useCallback：用于在函数组件中缓存回调函数，以提高性能。
+- useMemo：用于在函数组件中缓存计算结果，以提高性能。
+- useRef：用于在函数组件中保存可变的引用。
+  react18 新特性
+- Concurrent Mode：可以让 React 应用更快地响应用户操作，并且更好地利用多核 CPU。
+- Suspense for Data Fetching：可以让 React 应用更加优雅地处理数据加载和错误处理。
+- Server Components：可以让 React 应用更容易地实现 SSR（服务器端渲染）和 SSG（静态站点生成）。
+- Improved Accessibility：可以让 React 应用更容易地实现无障碍访问。
+- Automatic Batching of State Updates：可以让 React 应用更加高效地处理大量状态更新。
+
+### 问：算法题
+
+题目：实现一个函数，接受两个参数，第一个参数是[1, 2, 4, 7, 13]，第二个参数是 9，要求返回[1, 3]，因为 2 + 7 = 9，返回 2 和 7 的下标。
+
+答：先说一下解题思路吧，可以用双重循环来遍历数组中的每个元素，尝试找出元素相加等于目标值的两个数，返回他们对应的下标。
+具体实现：
+
+```typescript
+function findTargetIndex(arr: number[], target: number): number[] {
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = i + 1; j < arr.length; j++) {
+      if (arr[i] + arr[j] === target) {
+        return [i, j];
+      }
+    }
+  }
+  return [];
+}
+```
+
+问：这种方法没有考虑到时间复杂度吧，还有别的实现方法吗？
+其实这里我没有太多思路了，太久没有看过算法题，所以没有答上来，面试结束后我补习了一下，上面这里我用到了双重遍历，时间复杂度为 O(n²)，如果数组比较大，那么整个计算的过程会非常耗时，性能会变差，还有一种更好的实现方式是使用哈希表（Hash Table）：
+
+```typescript
+function findTargetIndex(arr: number[], target: number): number[] {
+  // 创建一个 Map 对象
+  const map = new Map<number, number>();
+  for (let i = 0; i < arr.length; i++) {
+    // 计算目标值与当前元素的差值
+    const complement = target - arr[i];
+    // 如果哈希表中存在差值的键
+    if (map.has(complement)) {
+      // 返回差值的下标和当前元素的下标
+      return [map.get(complement)!, i];
+    }
+    // 将当前元素的值和下标存储到哈希表中
+    map.set(arr[i], i);
+  }
+  return [];
+}
+```
+
+### 问：怎么使用 TS 一个对象类型，key 值是不确定，value 是 string
+
+答：
+
+```typescript
+interface Obj<T> {
+  [key: T]: string;
+}
+```
+
+追问：这是调用传参的方式，还有别的表达方式了吗
+
+答：还可以
+
+```typescript
+Record<string, string>;
+interface Obj {
+  [key: string]: string;
+}
+```
+
+### 问：flex：1，是什么意思。具体表示的是哪几个属性？
+
+答：这个表示开启弹性盒的下面的子元素的伸缩比例，拆分开就是`flex: 1 1 0%`，其中，1 表示子元素的伸缩比例为 1，1 表示子元素的收缩比例为 1，0% 表示子元素的基准值为 0
+
+## 总结
+
+因为上面那道很简单的算法题思路不够清晰，反应不够灵敏，或者是其他方面的原因？这次机会感觉就错过去了，下去一定得好好复习下算法方面的知识了，这种东西还是要多做勤做啊，加油吧~~
