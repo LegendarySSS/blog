@@ -31,7 +31,7 @@
   /* #endregion  /**======== Primary Color =========== */
 }
 html {
-  cursor: url('../../public/images/cursor.svg'), auto;
+  cursor: url('/images/cursor.svg'), auto;
 }
 html.dark {
   --c-bg: #050505;
