@@ -9,6 +9,7 @@ specifiers:
   '@tailwindcss/forms': ^0.5.2
   '@testing-library/jest-dom': ^5.16.4
   '@testing-library/react': ^14.0.0
+  '@types/howler': ^2.2.7
   '@types/lodash': ^4.14.182
   '@types/nprogress': ^0.2.0
   '@types/react': ^18.0.19
@@ -97,6 +98,7 @@ devDependencies:
   '@tailwindcss/forms': 0.5.3_tailwindcss@3.2.7
   '@testing-library/jest-dom': 5.16.5
   '@testing-library/react': 14.0.0_biqbaboplfbrettd7655fr4n2y
+  '@types/howler': 2.2.7
   '@types/lodash': 4.14.191
   '@types/nprogress': 0.2.0
   '@types/react': 18.0.28
@@ -2660,6 +2662,10 @@ packages:
     resolution: {integrity: sha512-wLEm0QvaoawEDoTRwzTXp4b4jpwiJDvR5KMnFnVodm3scufTlBOWRD6N1OBf9TZMhjlNsSfcO5V+7AF4+Vy+9g==}
     dependencies:
       '@types/unist': 2.0.6
+    dev: true
+
+  /@types/howler/2.2.7:
+    resolution: {integrity: sha512-PEZldwZqJJw1PWRTpupyC7ajVTZA8aHd8nB/Y0n6zRZi5u8ktYDntsHj13ltEiBRqWwF06pASxBEvCTxniG8eA==}
     dev: true
 
   /@types/istanbul-lib-coverage/2.0.4:
