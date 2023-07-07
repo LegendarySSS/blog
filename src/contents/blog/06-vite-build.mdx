@@ -1,0 +1,66 @@
+---
+title: vite打包优化
+description: 构建工具
+publishedAt: '2023-06-07'
+lastUpdated: '2023-06-07'
+tags: '性能优化'
+---
+
+## 优化前
+
+![优化前](/images/before.png)
+
+## 一、图片压缩
+
+可选择使用 vite 插件 vite-plugin-imagemin
+
+也可以手动在压缩网站里进行压缩，这里推荐两个好用的网站，可以同时压缩多张图片
+
+https://tinypng.com/
+
+https://www.iloveimg.com/zh-cn/compress-image
+
+## 二、 将资源放到 cdn（如 vConsole）
+
+```typescript
+<script src='https://unpkg.com/vconsole@latest/dist/vconsole.min.js'></script>;
+// 修改引用方式
+const getIsDebug = () => {
+  const debugEnvs = ['test', 'test01', 'newtest'];
+  const { search } = window.location;
+  if (search && search.indexOf('debug') > -1) {
+    return true;
+  }
+  return (
+    debugEnvs.indexOf(process.env.AWP_DEPLOY_ENV || '') > -1 ||
+    process.env.NODE_ENV === 'development'
+  );
+};
+const isDebug = getIsDebug();
+if (isDebug && window.VConsole) {
+  new window.VConsole();
+}
+```
+
+## 三、更细的划分代码块-分包
+
+```typescript
+export default defineConfig({
+  // ...
+  build: {
+    // ...
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          react: ['react', 'react-dom', 'react-router-dom'],
+          components: ['./src/components', '@zmh/components'],
+        },
+      },
+    },
+  },
+});
+```
+
+## 优化后
+
+![优化后](/images/after.png)

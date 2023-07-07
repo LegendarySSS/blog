@@ -1,0 +1,46 @@
+---
+title: Android部分机型兼容webview问题记录 - 持续更新
+description: h5、android
+publishedAt: '2023-05-08'
+lastUpdated: '2023-05-08'
+tags: '兼容性'
+---
+
+## 一、样式问题
+
+1. gap 属性只兼容到 Chrome57，故使用组件库的 Space 组件时需要考虑到低版本浏览器的兼容
+2. min-width 属性，已知小米机，Android7.1 不生效
+
+## 二、语法问题
+
+Uncaught SyntaxError: Invalid or unexpected token...
+
+此时会造成进程阻塞，从而使浏览器白屏（一开始不注意这个小问题的话，后期调试会比较耗时 - ）
+
+浏览器对当前语法解析不成功造成，一般情况下是低版本浏览器不能识别 es6+以上的代码，我们需要对代码进行 polyfill 处理
+
+以 vite 为例，安装@vitejs/plugin-legacy 库，书写以下配置
+
+```typescript
+import legacy from '@vitejs/plugin-legacy';
+
+export default defineConfig({
+  // ....
+  plugins: [
+    // ...
+    legacy({
+      targets: ['Chrome 50', 'Safari 11', '....'],
+    }),
+  ],
+});
+```
+
+## 三、第三方库
+
+vConsole - vConsole 底层实现使用了 ResizeObserver 监听自身元素变化，这个属性最低支持到 Chrome71，可使用 resize-observer-polyfill 插件解决
+
+```typescript
+import ResizeObserver from 'resize-observer-polyfill';
+
+window.ResizeObserver = ResizeObserver;
+```

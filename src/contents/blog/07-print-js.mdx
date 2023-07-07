@@ -1,0 +1,95 @@
+---
+title: 使用print-js会遇到的问题 & 解决方案
+description: 第三方库、日常开发
+publishedAt: '2023-07-06'
+lastUpdated: '2023-07-06'
+tags: '开发技巧'
+---
+
+## 一、 分页页码
+
+给要打印的元素加上以下样式即可实现浏览器原生的页码，前面不需要加@media print 和 @page
+
+```css
+#container {
+  page-break-after: always;
+}
+```
+
+<div class='mdx-container warn'>
+  注意：分页页码占据的是页脚的位置，需要元素留有margin距离，否则页码无法正常显示，如图所框中部分
+</div>
+![margin示例](/images/margin.png)
+控制margin
+```javascript
+import print from 'print-js';
+// ... 
+print({
+	//...
+  // size可选A4 A3 等等，margin的单位可以是cm，mm
+  style: `@media print { @page {size: auto;margin: 1cm;} }`
+});
+```
+## 二、莫名奇妙多出的空白页
+一般情况下，是整个body的margin值决定的，要设置打印时body的margin为0即可
+```javascript
+import print from 'print-js';
+// ... 
+print({
+	//...
+  style: `@media print { @page {size: auto;margin: 1cm;} body {margin: 0}}`
+});
+```
+<div class='mdx-container success'>
+  在Windows下，如果设置了overflow为auto或者scroll，滚动条也会占据打印预览框的位置，也会导致出现空白页的问题，最简单的一种方式是把overflow设为overlay即可
+</div>
+## 三、打印html样式混乱、模糊、字体大小不一致
+加上以下选项
+```javascript
+import print from 'print-js';
+// ... 
+print({
+	//...
+  maxWidth: 842, // 这个宽度为container元素的实际宽度，不设置的话，可能会超出A4纸
+  font_size: '',
+	targetStyles: ['*'],
+});
+```
+## 四、打印html背景色失效
+增加以下代码即可
+```css
+#container {
+	-webkit-print-color-adjust: exact;
+  color-adjust: exact;
+}
+```
+## 五、onPrintDialogClose事件在Windows中无效
+当打开打印的预览框时，根据业务需求可能要给特定的位置加一些元素或者样式等，那在打印完毕或者取消后，要恢复原来的样式，这个时候需要一个布尔值去控制，调print()之前设为true，onPrintDialogClose的回调中设为false，这个方案在mac中是可以实现的。
+
+print-js 的简单工作流程(个人理解)
+![工作流程](/images/draw.png)
+但在 Windows 中，由于浏览器的安全策略，关闭打印预览框之后，页面没有焦点，需要自己手动去点击才能聚焦
+
+这个时候就导致 iframe 一直不被销毁，onPrintDialogClose 中的逻辑也一直不会触发
+
+### 解决方案
+
+在调起 print 之前，使用 setInterval 创建一个定时器，每隔 500 毫秒触发一次 focus 事件，保持窗口的焦点状态，这样可以确保打印对话框在打开的过程中，页面不会失去焦点
+
+onPrintDialogClose 回调中清除定时器，然后再做其他的事
+
+```javascript
+this.segmentFlag = true;
+let focuser = setInterval(() => window.dispatchEvent(new Event('focus')), 500);
+print({
+  // ...
+  onPrintDialogClose: () => {
+    clearInterval(focuser);
+    console.log('关闭');
+    this.segmentFlag = false;
+  },
+  onIncompatibleBrowser: () => {
+    alert('当前浏览器不支持打印功能，建议使用谷歌或其他浏览器进行打印。');
+  },
+});
+```

@@ -1,0 +1,143 @@
+---
+title: 高德 - 面试记录
+description: ts、react、算法
+publishedAt: '2023-06-10'
+lastUpdated: '2023-06-10'
+tags: '面试'
+---
+
+## 直奔主题
+
+高德是线上实时编辑器，面试官在上面出题，我写，挺简单的，直接放出来吧。
+
+### 讲一下盒模型
+
+盒模型由 content、padding、border、margin 组成，默认情况下，元素的宽度和高度只包括内容区域的大小，不包括内边距、边框和外边距。但是可以通过设置 box-sizing 属性为 border-box 来改变盒模型的行为，使其包括内边距和边框在内。
+
+### position 有哪些值
+
+static 默认值、relative 相对定位、absolute 绝对定位、fixed 固定定位、sticky 元素在跨越特定阈值前为相对定位，之后为固定定位
+
+### 解释一下下面这段代码的作用，其中 flex: 1 具体代表什么，如果写 flex: 34 可以吗
+
+```javascript
+<div style='display: flex;justify-content: space-around;'>
+  <div style='width: 100px'></div>
+  <div style='flex: 1;'></div>
+  <div style='flex: 1;'></div>
+</div>;
+flex: 34;
+```
+
+实现了一行中的三个元素的排列，flex: 1 全写是 flex: 1 1 0%;其中第一个值是代表该元素占据可用空间的比例为 1，第二个值 1 表示该元素的伸缩比例为 1，即当有剩余空间时，该元素会按照比例进行伸缩。第三个值 0% 表示该元素的初始大小为 0%，即初始时不占据任何空间。
+可以写成 flex:34。那么占据的比例就为 34，flex 的值不能超过 100，不能是负数。
+
+### js 中数组常用的 api
+
+push pop unshift splice slice
+map forEach find findIndex filter flat flatMap every some indexOf includes
+
+### 实现合并、去重、排序，尽可能用多种方法
+
+```javascript
+var arr1 = [{a: 1}, {a: 3}, {a: 2}];
+var arr2 = [{a: 5}, {a: 3}, {a: 4}];
+合并、去重、排序
+[{a: 1}, {a: 2}, {a: 3}, {a: 4}, {a: 5}]
+```
+
+---
+
+```javascript
+function handleArr(arr1, arr2) {
+  const newArr = [...arr1, ...arr2];
+  const uniqueArr = Array.from(new Set(newArr));
+  const sortedArr = uniqueArr.sort((a, b) => a.a - b.a);
+  return sortedArr;
+}
+
+function handleArr(arr1, arr2) {
+  const mergedArr = arr1.concat(arr2);
+  const uniqueArr = mergedArr.reduce((acc, obj) => {
+    if (!acc.some((item) => item.a === obj.a)) {
+      acc.push(obj);
+    }
+    return acc;
+  }, []);
+  const sortedArr = uniqueArr.sort((a, b) => a.a - b.a);
+  return sortedArr;
+}
+```
+
+### 这里的 this 输出出来是什么
+
+```javascript
+() => {
+  this;
+};
+```
+
+undefined
+
+### 解释一下这句代码
+
+```javascript
+Object.prototype.toString.call(ary) === '[object array]';
+```
+
+这段代码的作用是判断一个变量 ary 是否为数组类型。它通过调用 Object.prototype.toString 方法，并传入 ary 变量作为参数，然后与字符串 '[object Array]' 进行比较，如果相等，则说明 ary 是一个数组。
+
+### 追问：为什么调用 Object 的原型中的 toString 方法，call 的作用又是什么
+
+调用 Object 的原型中的 toString 方法是为了获取一个对象的内部属性 [[Class]] 的值，该值表示对象的类型。通过调用 Object.prototype.toString 方法，可以将对象转换为字符串形式的表示，并返回一个表示对象类型的字符串。而 call 方法的作用是改变函数的执行上下文（即 this 的指向）。在这段代码中，通过使用 call 方法，将 Object.prototype.toString 方法的执行上下文设置为 ary，即将 ary 作为 this 的值传递给 toString 方法。这样做的目的是确保 toString 方法在执行时能够正确地获取 ary 对象的类型。
+
+### 讲一下 const、let、var 的区别
+
+var 声明的变量具有函数作用域或全局作用域，可以被重新赋值和重复声明；let 声明的变量具有块级作用域，可以被重新赋值但不能重复声明；const 声明的变量也具有块级作用域，必须进行初始化且不能被重新赋值和重复声明。
+
+### 以下代码输出是？
+
+```javascript
+{
+  var a = 1;
+  let b = 1;
+}
+{
+  console.log(a);
+  console.log(b);
+}
+```
+
+console.log(a)输出 1，console.log(b)会报一个 ReferenceError 变量未定义的错误
+
+### XMLHttpRequest 和 fetch 的区别是什么
+
+XMLHttpRequest 使用的是回调函数的方式处理异步请求，而 fetch 使用的是 Promise 的方式处理异步请求
+
+XMLHttpRequest 通过创建一个 XMLHttpRequest 对象来发送请求，并通过该对象的属性和方法来获取请求和响应的信息。而 fetch 使用的是全局的 fetch 函数来发送请求，并返回一个 Promise 对象，通过 Promise 的方法来获取请求和响应的信息
+
+XMLHttpRequest 在发送跨域请求时需要设置特定的请求头或使用代理服务器来实现跨域。而 fetch 在发送跨域请求时默认支持跨域请求，不需要额外的设置
+
+XMLHttpRequest 通过设置 onerror、ontimeout 等事件来处理请求错误。而 fetch 使用 Promise 的 catch 方法来处理请求错误
+
+### 在 react 中，连续三次 setData，视图会发生什么变化？
+
+```javascript
+this.setState({ a: 1 });
+this.setState({ a: 2 });
+this.setState({ a: 3 });
+```
+
+React 会对连续的 setState 进行合并处理，只会执行一次重新渲染。因此，最终视图只会更新一次，a 的值会被设置为 3
+
+### 讲一下 react 的事件机制？
+
+```javascript
+<div onClick={this.ccccc.bind(this)}>
+  <div onClick={this.xxxxx.bind(this)} />
+</div>
+```
+
+react 并不是将 click 事件绑定到了 div 的真实 DOM 上，而是在 document 处监听了所有的事件，当事件发生并且冒泡到 document 处的时候，React 将事件内容封装并交由真正的处理函数运行。这样的方式不仅仅减少了内存的消耗，还能在组件挂在销毁时统一订阅和移除事件。
+
+除此之外，冒泡到 document 上的事件也不是原生的浏览器事件，而是由 react 自己实现的合成事件（SyntheticEvent）。因此如果不想要是事件冒泡的话应该调用 event.preventDefault()方法，而不是调用 event.stopProppagation()方法。

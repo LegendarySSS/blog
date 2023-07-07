@@ -1,8 +1,10 @@
 import { Howl } from 'howler';
 import Image from 'next/image';
 import React, { useEffect, useRef, useState } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import songs from '@/constants/songs';
+import { isPlayingState, setIsPlayingState } from '@/store/player';
 
 import nextIcon from '~/images/next.svg';
 import pauseIcon from '~/images/pause.svg';
@@ -10,9 +12,11 @@ import playIcon from '~/images/play.svg';
 import prevIcon from '~/images/prev.svg';
 
 const Player = () => {
+  const isPlaying = useRecoilValue(isPlayingState);
+  const [_, setIsPlaying] = useRecoilState(setIsPlayingState);
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
   const [isExpanded, setIsExpanded] = useState(true);
+  const [isInitialized, setIsInitialized] = useState(false);
   const [audio, setAudio] = useState(
     new Howl({ src: songs[0].url, onend: () => nextSongRef.current?.click() })
   );
@@ -38,9 +42,16 @@ const Player = () => {
     });
   };
   useEffect(() => {
-    audio.load();
-    audio.play();
+    if (isInitialized) {
+      audio.load();
+      audio.play();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [audio]);
+
+  useEffect(() => {
+    setIsInitialized(true);
+  }, []);
   const handleSongChange = (direction: string) => {
     audio.unload();
     const index =

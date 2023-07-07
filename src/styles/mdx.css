@@ -125,3 +125,41 @@ li {
   @apply invisible absolute -right-5 top-1/2 -translate-y-1/2 text-lg text-primary-400 dark:text-primary-300;
   content: '#';
 }
+.mdx-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  height: auto;
+  background-color: #fef9e1;
+  position: relative;
+  padding: 16px 20px;
+  padding-left: 50px;
+  color: rgba(0, 0, 0, 0.9);
+  margin-bottom: 0.5rem;
+  border-radius: 10px;
+}
+.mdx-container::before {
+  content: '!';
+  position: absolute;
+  left: 18px;
+  width: 20px;
+  height: 20px;
+  top: 50%;
+  margin-top: -10px;
+  border-radius: 50%;
+  background-color: #f9d247;
+  text-align: center;
+  line-height: 20px;
+  font-weight: 500;
+}
+.mdx-container p {
+  line-height: 1.2;
+  margin: 0;
+}
+.mdx-container.success {
+  background-color: #effaf4;
+}
+.mdx-container.success::before {
+  content: '💡';
+  background-color: #53b679;
+}

@@ -40,7 +40,8 @@
     "react-use": "^17.4.0",
     "recoil": "^0.7.4",
     "swr": "^2.0.0",
-    "tailwind-merge": "^1.5.1"
+    "tailwind-merge": "^1.5.1",
+    "three": "0.139.2"
   },
   "devDependencies": {
     "@antfu/ni": "^0.20.0",

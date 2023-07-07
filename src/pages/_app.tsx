@@ -9,6 +9,8 @@ import '@/styles/mdx.css';
 import '@/styles/dracula.css';
 import '@/styles/nprogress.css';
 
+import Player from '@/components/Player';
+
 Router.events.on('routeChangeStart', nProgress.start);
 Router.events.on('routeChangeError', nProgress.done);
 Router.events.on('routeChangeComplete', nProgress.done);
@@ -22,6 +24,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <RecoilRoot>
       <ThemeProvider attribute='class' enableSystem={true}>
         <Component {...pageProps} />
+        <Player />
       </ThemeProvider>
     </RecoilRoot>
   );
