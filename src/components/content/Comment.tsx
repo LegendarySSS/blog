@@ -14,6 +14,7 @@ export default function Comment() {
       categoryId='DIC_kwDOJcAK5s4CXDzE'
       mapping='pathname'
       reactionsEnabled='0'
+      lang='zh-CN'
       emitMetadata='0'
       loading='lazy'
       theme={theme as Theme}

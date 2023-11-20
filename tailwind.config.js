@@ -13,6 +13,9 @@ module.exports = {
       mid: {
         max: '1320px',
       },
+      midsm: {
+        max: '1200px',
+      },
       laptop: {
         max: '1024px',
       },

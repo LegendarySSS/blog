@@ -52,6 +52,10 @@ html.dark {
       U+2215, U+FEFF, U+FFFD;
   }
 
+  @font-face {
+    font-family: 'Custom';
+    src: url('/fonts/custom-font.ttf');
+  }
   /* #region  /**=========== Default Typography =========== */
   h1,
   .h1 {
@@ -153,4 +157,39 @@ html.dark {
 .animate-shadow {
   @apply after:absolute after:inset-0 after:z-[-1] after:opacity-0 after:transition-opacity hover:after:opacity-100;
   @apply after:shadow-md dark:after:shadow-none;
+}
+
+.column-layout {
+  column-gap: 1.5rem;
+}
+
+.story-container {
+  border-top: 1px solid #f1f2f3;
+}
+
+.story-title {
+  font-family: 'Custom', sans-serif;
+}
+
+@media screen and (min-width: 300px) and (max-width: 520px) {
+  .column-layout {
+    column-count: 2;
+  }
+}
+
+@media screen and (min-width: 520px) and (max-width: 999px) {
+  .column-layout {
+    column-count: 3;
+  }
+}
+@media screen and (min-width: 1000px) and (max-width: 1249px) {
+  .column-layout {
+    column-count: 4;
+  }
+}
+
+@media screen and (min-width: 1250px) {
+  .column-layout {
+    column-count: 4;
+  }
 }

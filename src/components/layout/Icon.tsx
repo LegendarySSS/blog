@@ -27,7 +27,7 @@ const Icon = () => {
       <UnstyledLink href='/blog' className='hidden mb:inline'>
         <MdOutlineArticle />
       </UnstyledLink>
-      <UnstyledLink href='/projects' className='hidden mb:inline'>
+      <UnstyledLink href='/fragment' className='hidden mb:inline'>
         <FaRegLightbulb />
       </UnstyledLink>
       <a

@@ -12,8 +12,8 @@ export const navAtom = atom({
       link: '/blog',
     },
     {
-      name: '思维碎片',
-      link: '/projects',
+      name: '碎碎念',
+      link: '/fragment',
     },
   ],
 });

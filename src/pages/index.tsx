@@ -27,8 +27,8 @@ export default function HomePage() {
                 <HatsuneMiku />
                 <div data-fade='5' className='mt-[60px] flex'>
                   <CustomLink href='/blog'>学习交流</CustomLink>
-                  <CustomLink href='/projects' className='ml-6'>
-                    思维碎片
+                  <CustomLink href='/fragment' className='ml-6'>
+                    碎碎念
                   </CustomLink>
                 </div>
               </div>
