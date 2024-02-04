@@ -170,7 +170,11 @@ html.dark {
 .story-title {
   font-family: 'Custom', sans-serif;
 }
-
+.heart {
+  position: absolute;
+  transition: 0.4s linear;
+  user-select: none;
+}
 @media screen and (min-width: 300px) and (max-width: 520px) {
   .column-layout {
     column-count: 2;
