@@ -1,4 +1,4 @@
-<h1 align="center">blog-demo</h1>
+<h1 align="center">blog</h1>
 
 <p align="center">
 用Nextjs和tailwindcss构建的现代最美丽的极简主义博客
