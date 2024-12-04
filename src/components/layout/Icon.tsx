@@ -41,9 +41,9 @@ const Icon = () => {
         <a className='cursor-pointer' onClick={() => setShowImage(!showImage)}>
           <SiWechat />
         </a>
-        <div className='w-28 h-36 absolute top-12 -left-8'>
+        <div className='w-32 h-32 absolute top-12 -left-8'>
           <Image
-            src='https://i.niupic.com/images/2023/04/28/aDM2.jpg'
+            src='https://telegraph-image-9jg.pages.dev/file/AgACAgEAAyEGAASNsUhIAAMeZ1AV5jeXrm78M9-EF8wm15wpmrMAAuysMRswY4BGquk7s3VQmNkBAAMCAAN5AAM2BA.png'
             alt=''
             layout='fill'
             className={`transition duration-300 ${

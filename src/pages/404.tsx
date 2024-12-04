@@ -17,9 +17,9 @@ export default function NotFoundPage() {
               size={60}
               className='drop-shadow-glow animate-flicker text-red-500'
             />
-            <h1 className='md:text-6xl mt-8 text-4xl'>Page Not Found</h1>
+            <h1 className='md:text-6xl mt-8 text-4xl'>页面走丢了</h1>
             <ArrowLink className='md:text-lg mt-4' href='/'>
-              Back to Home
+              回到首页
             </ArrowLink>
           </div>
         </section>

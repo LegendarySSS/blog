@@ -6,7 +6,7 @@ module.exports = {
 
   // Uncoment to add domain whitelist
   images: {
-    domains: ['i.niupic.com', 'y.qq.com', 'picsum.photos'],
+    domains: ['telegraph-image-9jg.pages.dev', 'y.qq.com'],
   },
 };
 

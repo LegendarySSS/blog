@@ -1,0 +1,110 @@
+---
+title: 使用 Cloudflare + Telegraph 搭建个人图床
+description: 利用 Cloudflare Workers 和 Pages 的免费额度，将图片托管在 Cloudflare 网络中
+publishedAt: '2024-12-01'
+lastUpdated: '2024-12-01'
+tags: '技巧'
+---
+
+# 一、前言
+
+在写博客的过程中，经常会用到图片，而且图片的存储是一个比较头疼的问题。
+
+一般来说，我们可以使用图床来存储图片，但是大部分图床都有一些问题，比如：pic1.cc、imgurl 等图床，有时候会因为服务器问题导致图片无法访问，而且有些图床还会有流量限制，这样就会导致图片无法正常显示。
+
+我好久没有看自己的博客，今天上来一看，发现自己用的图床服务已经停止维护了，之前上传过的图片也都无法显示了。
+![image](https://telegraph-image-9jg.pages.dev/file/AgACAgEAAyEGAASNsUhIAAMRZ07jiM6D9QcsPT2f26mfAAFIbHLWAALArTEbDVRwRvMXc-4DgsyRAQADAgADeAADNgQ.png)
+![image](https://telegraph-image-9jg.pages.dev/file/AgACAgEAAyEGAASNsUhIAAMJZ07W2qOBbSfBgbG0UhQD8POG-e4AAritMRsNVHBG0oafhUWQPJsBAAMCAAN3AAM2BA.png)
+
+在这个背景下，我决定还是自己动手搭建一个图床，这样就可以最小限度的避免因第三方的问题导致图片无法正常显示。
+
+# 二、搭建图床
+
+Github 是天然的一个存储各种文件的地方，我们可以使用 Github 来保存一些图片，但这样似乎不太符合 Github 的初衷，而且 Github 也有流量限制。
+
+于是开始寻找其他的解决方案
+![image](https://telegraph-image-9jg.pages.dev/file/AgACAgEAAyEGAASNsUhIAAMKZ07Y4yny_HF_mhgUQmwNseLNM6UAArmtMRsNVHBGI7F0r4AgXxwBAAMCAAN3AAM2BA.png)
+综合来看，符合零成本、流程简单、速度快、稳定性高的方案，我选择了 Cloudflare + Telegraph。
+
+## 1. Github
+
+首先，fork 这个仓库 [telegraph-image](https://github.com/cf-pages/Telegraph-Image)，然后 clone 到本地（没有定制化需求的话也可以不 clone）。
+
+## 2. 注册 Cloudflare
+
+进入官网 [Cloudflare](https://www.cloudflare.com/)，注册一个账号。
+
+## 3. Workers 和 Pages
+
+找到这个选项，绑定 github 仓库，就可以使用 workers 和 pages 服务进行部署，这里的操作步骤类似于 [vercel](https://vercel.com/) 和 [netlify](https://www.netlify.com/)。
+
+## 4. Telegram
+
+Telegraph 是 telegram 旗下的一个产品，它可以将图片上传到 telegram 的服务器上，然后通过一个链接来访问这个图片。
+背靠 telegram 这样(有实力)的后台，就可以放心的使用这个服务，而且速度也是非常快的。
+其原理就是：通过 telegram 的 bot 来上传图片，然后获取到图片的链接。
+
+### 4.1. 获取 token
+
+在 Telegram 中搜索 `@BotFather`，然后点击 `start`，再输入`/newBot`，按照提示操作，获取到 token。
+![image](https://telegraph-image-9jg.pages.dev/file/AgACAgEAAyEGAASNsUhIAAMLZ07bubz8A-uysXVIxMQhpmqtvMIAArqtMRsNVHBGdQ75lpjSVNUBAAMCAAN3AAM2BA.jpg)
+上图橙色的那一串就是机器人的 token，后面会用到。
+
+### 4.2. 创建 Channel
+
+在 Telegram 中创建一个 Channel，点击 Administrators 将机器人设置为频道的管理员，这样机器人就可以上传图片到频道中了。
+
+<img
+  src='https://telegraph-image-9jg.pages.dev/file/AgACAgEAAyEGAASNsUhIAAMMZ07dSyTEmWkkmlNdpZcTkHssSZYAArutMRsNVHBGduwQFJ5W3YUBAAMCAAN3AAM2BA.jpg'
+  alt='images'
+/>
+
+### 4.3. 获取 Chat_ID
+
+在频道中发送一条消息，然后访问 `https://api.telegram.org/bot<token>/getUpdates`，获取到 chat_id，如下图：
+![image](https://telegraph-image-9jg.pages.dev/file/AgACAgEAAyEGAASNsUhIAAMOZ07g_Z1E-0b9jqxTHcbAIXBjUfUAAr2tMRsNVHBGCdklBkpQUecBAAMCAAN3AAM2BA.jpg)
+
+### 4.4. 部署 Cloudflare
+
+在 Cloudflare 的 Dashboard 中找到环境变量，添加 token 和 chat_id，如下图：
+
+![image](https://telegraph-image-9jg.pages.dev/file/AgACAgEAAyEGAASNsUhIAAMPZ07i5InpWn9FCWSKG2ewpBPIMCUAAr6tMRsNVHBGdREfwKinPusBAAMCAAN3AAM2BA.png)
+
+部署完成后打开 Cloudflare Pages 的链接，就可以看到这个页面了：
+
+![image](https://telegraph-image-9jg.pages.dev/file/AgACAgEAAyEGAASNsUhIAAMSZ1AJf3RNNcb8tENG7iUZ6ySikFoAAtqsMRswY4BGhXccIFShDSkBAAMCAAN3AAM2BA.png)
+
+上传完成后，就可以看到图片的链接了：
+![image](https://telegraph-image-9jg.pages.dev/file/AgACAgEAAyEGAASNsUhIAAMTZ1AJt0FfVfl5kjgZN29HUz9iCfEAAtusMRswY4BGXRXYq0OyzgsBAAMCAAN5AAM2BA.png)
+
+这个时候去看下 tg，其实图片已经上传到频道中了：
+![image](https://telegraph-image-9jg.pages.dev/file/AgACAgEAAyEGAASNsUhIAAMYZ1ARZDHirZW6ATST_tZo37LwHqAAAuWsMRswY4BGV2MJuugE9OQBAAMCAAN3AAM2BA.png)
+
+到这一步整个流程都很清晰了，就是利用 Cloudflare 的 Workers 和 Pages 服务，将图片托管在 Cloudflare 网络中，然后通过 telegram 的 bot 来上传图片。
+
+还可以访问 `/admin` 路径，来查看上传的图片：
+
+![image](https://telegraph-image-9jg.pages.dev/file/AgACAgEAAyEGAASNsUhIAAMUZ1AKFpVo1WEqPq_ssxDQ8KUNw78AAtysMRswY4BGxji1TDPzeNsBAAMCAAN3AAM2BA.png)
+
+# 四、扩展
+
+## 1. 自定义域名
+
+可以在 Cloudflare 的 Workers 中添加一个路由，将图片的链接映射到自己的域名上。我没有自己的域名，这里就不展开说了。
+
+## 2. KV 存储
+
+上述提到 `/admin` 路径，需要在 Cloudflare 添加一个 KV 储存空间
+![image](https://telegraph-image-9jg.pages.dev/file/AgACAgEAAyEGAASNsUhIAAMVZ1ALZAa8IJeGJeoCLX6aBiEbvC8AAt2sMRswY4BGf1xAaO2DJm4BAAMCAAN3AAM2BA.png)
+
+然后在 Workers 绑定刚刚创建的 KV 储存空间，变量名为 img_url, 值为 KV 储存空间的名称。
+
+![image](https://telegraph-image-9jg.pages.dev/file/AgACAgEAAyEGAASNsUhIAAMWZ1ALnDhz7_Jd_wYvmBGsQQ9u2UgAAt6sMRswY4BGtSO0wHU5XiABAAMCAAN3AAM2BA.png)
+
+## 3. 批量上传
+
+目前我还没有折腾这个场景，[issue](https://github.com/cf-pages/Telegraph-Image/issues/161) 里有一个解决方案。
+
+## 4. 鉴权
+
+目前这个服务是公开的，没有鉴权，也就是说任何人只要拿到这个地址，就可以上传图片，可以通过在 Cloudflare 中要配置相应的环境变量，然后在代码中读取这个环境变量，判断 token 是否正确。

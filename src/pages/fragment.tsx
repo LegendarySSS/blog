@@ -20,10 +20,7 @@ export default function ProjectsPage() {
               height={200}
               src={item.imageUrl}
               alt={item.title}
-              className={clsx(
-                'm-auto mt-0',
-                item.rotate ? 'rotate-90 object-contain mb-10 mt-6' : 'mb-4'
-              )}
+              className={clsx('m-auto mt-0 mb-4')}
             />
             <div className='p-4 pt-0'>
               <h2 className='story-title font-medium text-2xl mb-1'>

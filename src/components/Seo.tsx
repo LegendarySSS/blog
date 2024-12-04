@@ -57,8 +57,6 @@ export default function Seo(props: SeoProps) {
       <link rel='canonical' href={`${meta.url}${router.asPath}`} />
       <link key='/favicon/favicon.ico' href='/favicon/favicon.ico' rel='icon' />
       <meta name='theme-color' content='#ffffff' />
-      {/* eslint-disable-next-line @next/next/no-sync-scripts */}
-      <script src='/js/clickcolorball.js'></script>
     </Head>
   );
 }

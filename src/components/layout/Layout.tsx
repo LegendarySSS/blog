@@ -1,10 +1,13 @@
 import * as React from 'react';
 
+import useCanvasCursor from '@/hooks/useCanvasCursor';
+
 import Footer from '@/components/layout/Footer';
 import Header from '@/components/layout/Header';
 import Plum from '@/components/layout/Plum';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
+  useCanvasCursor();
   return (
     <>
       <Header />
@@ -15,6 +18,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </div>
       </div>
       <Plum />
+
+      <canvas className='pointer-events-none fixed inset-0' id='canvas' />
     </>
   );
 }
