@@ -1,0 +1,236 @@
+---
+title: Monorepo 架构在前端项目里的实践
+description: 如何在前端项目中使用 Monorepo 架构
+publishedAt: '2024-08-24'
+lastUpdated: '2024-08-24'
+tags: '架构'
+---
+
+# 一、概念
+
+## 1. 名词解释
+
+<font color='red'>repo</font>：
+repository，仓库，是我们用来管理项目代码的一个基本单元。通常每个仓库负责一个模块或包的编码、构建、测试和发布，代码规模相对较小，逻辑聚合，业务场景也比较收拢。
+
+<font color='red'>workspaces</font>
+：工作区。指在开发环境中为特定项目或一组相关项目创建的一个集中区域。
+
+<font color='red'>nohoist</font>
+：hoist（/hɔɪst/v.吊起，提升），顾名思义，用于控制某些依赖不被提升到根目录的 node_modules
+中，以避免可能出现的兼容性问题或其他与依赖管理相关的问题。
+
+<font color='red'>Phantom dependencies</font>
+：幻影依赖。由于扁平化的方式使得依赖提升到了根目录，此时项目中的 package.json 并没有记录这个依赖，但是却能够在项目中使用，此时就造成了幻影依赖。幻影依赖可能会导致依赖之间的兼容问题，导致项目不能正常运行。
+
+## 2. 优劣势对比
+
+提起 Monorepo，不得不说我们常用到的 Multirepo，repo 的概念已经明确，那么区别就在 mono 和 multi，他们的区别如下：
+
+<table className='table'>
+  <thead>
+    <tr>
+      <th>模式</th>
+      <th>特点</th>
+      <th>优势</th>
+      <th>劣势</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Monorepo</td>
+      <td>多个项目或模块放在同一个仓库里管理</td>
+      <td>
+        <ul>
+          <li>公共代码集中管理，方便各项目间复用，减少重复开发</li>
+          <li>所有项目的依赖可以统一管理和升级，降低因版本不一致导致的问题</li>
+          <li>标准化基建模式，可以统一配置，规范开发流程和提升效率</li>
+        </ul>
+      </td>
+      <td>
+        <ul>
+          <li>项目较多时仓库体积较大，克隆和其他操作时会受到影响</li>
+          <li>代码权限颗粒度问题，增加了非 owner 修改代码的风险</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>Multirepo</td>
+      <td>按模块分为多个代码库，实现每个 repo 独立开发</td>
+      <td>
+        <ul>
+          <li>每个 repo 可以灵活选择开发工具和环境配置等</li>
+          <li>自然的权限控制，发布上线对其他项目无影响</li>
+        </ul>
+      </td>
+      <td>
+        <ul>
+          <li>涉及公共组件、函数或配置等时，复制代码维护成本高</li>
+          <li>
+            依赖包版本管理容易出现问题，不同项目可能因未及时升级依赖而导致报错
+          </li>
+          <li>每个项目需单独配置基建，重复工作多</li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+# 二、使用场景
+
+## 1. 中大型企业项目
+
+当我们手上有两个或以上的前端项目，且业务逻辑和 UI 耦合较多，这个时候可以使用 Monorepo 去组织代码，将相同结构的代码、组件、函数都提出来单独放到一个文件夹里去管理，方便各个项目去复用。
+
+或者在协作开发时，开发团队可以在一个仓库里同时开发和维护多个项目，提高开发效率和协作能力。
+
+## 2. 组件库开发
+
+在开发组件库时，我们通常会将组件库单独放到一个仓库里去管理，这个时候我们可以使用 Monorepo 去管理组件库的代码，方便我们去管理组件库的代码、文档、测试等。
+
+## 3. 跨平台项目
+
+如果一个项目需要同时支持多个平台，如 Web、移动端和桌面端，可以将公共的业务逻辑和模型放在一个地方，然后针对不同平台进行特定的实现。
+
+这样可以提高代码的复用性和可维护性，同时也方便团队进行跨平台开发和测试。
+
+## 4. 开源项目
+
+现在我们常见的一些开源项目，如 Vue、Babel、React、Angular、Jest 等等都是使用这种模式来管理代码。
+
+开源项目使用 Monorepo 的优点就在于开发者可以将多个模块或者工具放到一个仓库里，方便用户一次性获取和使用。
+
+# 三、依赖管理方案
+
+## 1. npm
+
+npm 在 v7 版本才支持了 workspaces，无法与之前已存在的 Monorepo 应用相适配。在功能方面，它缺乏 yarn 的 nohoist 功能，无法有效应对依赖被提升到根目录带来的问题；同时也不具备 pnpm 那种通过特定方式共享依赖以节省磁盘空间的能力。
+
+## 2. yarn
+
+最早支持 workspaces 的包管理器。但是 yarn 的共享包才会提升到 node_modules 根目录下，其他非共享库都会每个地方留一份处理包的存储，共享包的集中存放和非共享包的多处留存，造成了存储空间的浪费。同时，将包提升到根目录的这种方式可能与某些包的常规引用方式不兼容，从而产生问题。
+
+## 3. pnpm
+
+“Performant NPM”，即高性能的 npm。
+
+pnpm 解决了很多令人诟病的问题，其中，比较经典的就是 Phantom dependencies
+
+- 安装依赖速度快，软/硬链接结合
+- 安装过的依赖缓存全局复用，缓存逻辑基于文件块，不同版本的依赖可以只缓存 diff
+- 自身支持 workspaces 相关
+- 天然支持 Monorepo
+
+  导读：https://pnpm.io/zh/
+
+## 4. lerna
+
+lerna 最早支持对 Monorepo 方案的事实标准，但与 yarn 强绑定，不支持像 pnpm 那样的 workspaces。
+
+对 lerna 了解较少，感兴趣的可以移步：https://www.lernajs.cn/
+
+## 四、项目搭建
+
+## 1. 技术选型
+
+最终选择 pnpm 的方式来搭建项目。
+
+一是 pnpm 的硬链接和内容寻址存储，意味着相同版本的依赖包在磁盘上只存储一份，无论有多少个项目在 Monorepo 中使用它。不同的项目通过硬链接指向同一物理文件，大大节省了磁盘空间。比如在一个大型项目中，如果多个项目都依赖于一个版本的 React，pnpm 只会存储一份 React 的代码，而不是每个项目都重复存储。
+
+二是 pnpm 超快的安装速度和依赖解析算法，在开发或是发布的时候都有着很好的体验。
+
+## 2. 创建项目
+
+1） 新建目录 monorepo-demo，pnpm init 生成 package.json 文件
+
+2） 新建 common、packages 文件夹，其中 common 用来存放所有项目需要共用的一些代码逻辑，packages 存放各个子项目
+
+3） 新建 pnpm-workspace.yaml 文件，告诉 pnpm 哪些目录是工作区，并在安装依赖时将它们链接到一起
+
+```yaml
+packages:
+  - './common/'
+  - './packages/**'
+```
+
+4） 进入 packages 文件夹下，使用 vite 快速创建 3 个子项目
+
+```shell
+pnpm create vite
+```
+
+5）pnpm 安装依赖时，如果没有特殊指定，它更倾向于使用远程的，创建.npmrc 文件，指定优先使用 Workspace 中的 package
+
+```shell
+link-workspace-packages = true # 启用工作区内部的包链接
+prefer-workspace-packages = true # 优先选择工作区中的包
+recursive-install = true # 递归地安装工作区中所有项目的依赖
+```
+
+6） 进入根目录，pnpm install 安装全局依赖
+
+## 3. 最终目录结构
+
+```shell
+monorepo-demo
+├── common
+   ├── components  // 公用组件
+   ├── hooks  // 公共hooks
+   ├── utils  // 公共工具库
+   ├── index.ts
+   └── package.json
+├── packages  // 存放各个子项目
+   ├── project-1
+   ├── project-2
+   └── project-3
+├── .npmrc
+├── pnpm-lock.yaml
+├── pnpm-workspace.yaml  // 工作空间配置
+├── package.json
+├── README.md
+```
+
+# 五、依赖管理
+
+## 1. 全局安装
+
+pnpm 提供了--workspace-root 参数，可以简写为-w，例如现在要装一个 axios 作为全局依赖
+
+```shell
+pnpm add axios --workspace-root
+#or
+pnpm add axios -w
+```
+
+如果是一个开发依赖的话，就在后面跟一个 D
+
+```shell
+pnpm add axios -wD
+```
+
+## 2. 局部安装
+
+局部安装有两种方式
+
+- 进入到对应的子项目，pnpm add 或 pnpm i
+- 使用–filter 指定对应项目进行安装
+
+这里我们主要讲第二种方法，例如我们要在 project-1 下安装 dayjs，命令如下
+
+```shell
+pnpm --filter project-1 add dayjs
+# 或者简写-F
+pnpm -F project-1 add dayjs
+# 卸载同理
+pnpm -F project-1 remove dayjs
+```
+
+## 3. 项目之间互相引用
+
+通过以上的局部安装方式安装对应的包之后，packages.json 中会出现这样的标记
+![image](https://telegraph-image-9jg.pages.dev/file/AgACAgEAAyEGAASNsUhIAAMfZ1AsO_4pIAmw1eO46PtwRVQyzEAAAvGsMRswY4BGoh1fsIly09oBAAMCAAN4AAM2BA.png)
+这个时候@zmh/common 和 project-2 就被软链接到了 project-1 中，^表示会实时同步本地包的改动，在项目中引入需要用的组件即可
+![image](https://telegraph-image-9jg.pages.dev/file/AgACAgEAAyEGAASNsUhIAAMgZ1AsWS0cvnB-ruCQxv9duhzkYp4AAvKsMRswY4BGEGBZoeP5F6kBAAMCAAN5AAM2BA.png)
+
+# 六、演示地址
+
+https://github.com/LegendarySSS/monorepo-demo
