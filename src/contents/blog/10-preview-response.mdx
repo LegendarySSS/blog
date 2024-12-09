@@ -1,0 +1,53 @@
+---
+title: preview 和 response 数据不一致引发的一个 bug
+description: devtools、日常开发、调试技巧
+publishedAt: '2024-10-14'
+lastUpdated: '2024-10-14'
+tags: '调试技巧'
+---
+
+## 问题描述
+
+大致情况是有一个多选的 select 下拉框，里面的 options 是通过接口获取的。
+
+```jsx
+const [options, setOptions] = useState([]);
+
+useEffect(() => {
+  fetchOptions().then((res) => {
+    setOptions(res.data);
+  });
+}, []);
+
+<Select options={options} />;
+```
+
+我发现某些情况下，选择了 A 选项，但是 B 选项也会跟着选中，对我们这种有经验的开发者来说，这种情况很容易想到这个 A 和 B 肯定是 value 相同导致的。
+
+习惯性的打开控制台，在接口返回的 preview 中确认了这两条数据的 value 果然是相同的。
+
+这个时候还没有太在意，以为是数据库的某些脏数据导致的。
+
+两天后，后端问我为什么会出现这种情况，他给我截了张图，他的接口返回的数据是没有问题的。
+
+这个时候我发现他是通过 response 查看的数据，我赶紧打开 response 查看，果然和 preview 中的数据不一致。
+
+平时看数据格式，我都是通过 preview 查看的，很少用到 response 这个选项卡。
+
+先是看这两条数据的 value，马上反应过来应该是精度问题，因为 value 都是 2000123021030210210 类似这种的大数字，JS 中倒是经常出现精度问题，但是这个问题在我这里还是第一次遇到。
+
+难道说浏览器在处理这种大数字的时候也会有精度问题？
+
+## 解决问题
+
+在网上搜了一下，发现好多人遇到了这个问题，但其核心是后端的问题。
+
+这个 value 在 Java 中属于 Long 类型，返回给浏览器以后，浏览器会将这个 Long 类型的数据转换成 Number 类型，而 Number 类型的精度是有限的，所以就会出现精度问题。
+
+解决方案也很简单，后端将这个 Long 类型的数据转换成 String 类型返回给浏览器，这样就不会出现精度问题了。
+
+如果是 SpringBoot 的话，在配置文件中加上这个配置就可以了，也不用改为 String 类型了。
+
+```java
+spring.jackson.deserialization.USE_BIG_INTEGER_FOR_INTS=true
+```
