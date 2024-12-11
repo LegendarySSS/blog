@@ -59,6 +59,9 @@ importers:
       react-intersection-observer:
         specifier: ^9.4.0
         version: 9.13.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react-photo-view:
+        specifier: ^1.2.6
+        version: 1.2.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-tippy:
         specifier: ^1.4.0
         version: 1.4.0
@@ -4420,6 +4423,12 @@ packages:
     peerDependencies:
       react: ^0.14.0 || ^15.0.0 || ^16 || ^17 || ^18
       react-dom: ^0.14.0 || ^15.0.0 || ^16 || ^17 || ^18
+
+  react-photo-view@1.2.6:
+    resolution: {integrity: sha512-Fq17yxkMIv0oFp7HOJr39HgCZRP6A9K5T5rixJ4flSUYT2OO3V8vNxEExjhIKgIrfmTu+mDnHYEsI9RRWi1JHw==}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
 
   react-tippy@1.4.0:
     resolution: {integrity: sha512-r/hM5XK9Ztr2ZY7IWKuRmISTlUPS/R6ddz6PO2EuxCgW+4JBcGZRPU06XcVPRDCOIiio8ryBQFrXMhFMhsuaHA==}
@@ -10597,6 +10606,11 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
       react-lifecycles-compat: 3.0.4
       warning: 4.0.3
+
+  react-photo-view@1.2.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   react-tippy@1.4.0:
     dependencies:

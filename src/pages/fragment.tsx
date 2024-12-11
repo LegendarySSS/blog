@@ -1,5 +1,8 @@
 import clsx from 'clsx';
 import Image from 'next/image';
+import { PhotoProvider, PhotoView } from 'react-photo-view';
+
+import 'react-photo-view/dist/react-photo-view.css';
 
 import Layout from '@/components/layout/Layout';
 import Seo from '@/components/Seo';
@@ -15,13 +18,39 @@ export default function ProjectsPage() {
             key={item.id}
             className='shadow-md bg-white rounded-lg break-inside-avoid mb-5 story-container'
           >
-            <Image
-              width={200}
-              height={200}
-              src={item.imageUrl}
-              alt={item.title}
-              className={clsx('m-auto mt-0 mb-4')}
-            />
+            <PhotoProvider
+              speed={() => 800}
+              easing={(type) =>
+                type === 2
+                  ? 'cubic-bezier(0.36, 0, 0.66, -0.56)'
+                  : 'cubic-bezier(0.34, 1.56, 0.64, 1)'
+              }
+              maskOpacity={0.5}
+              toolbarRender={({ onScale, scale }) => {
+                return (
+                  <>
+                    <svg
+                      className='PhotoView-Slider__toolbarIcon'
+                      onClick={() => onScale(scale + 1)}
+                    />
+                    <svg
+                      className='PhotoView-Slider__toolbarIcon'
+                      onClick={() => onScale(scale - 1)}
+                    />
+                  </>
+                );
+              }}
+            >
+              <PhotoView src={item.imageUrl}>
+                <Image
+                  width={200}
+                  height={200}
+                  src={item.imageUrl}
+                  alt={item.title}
+                  className={clsx('m-auto mt-0 mb-4')}
+                />
+              </PhotoView>
+            </PhotoProvider>
             <div className='p-4 pt-0'>
               <h2 className='story-title font-medium text-2xl mb-1'>
                 {item.title}
