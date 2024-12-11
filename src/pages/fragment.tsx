@@ -26,20 +26,6 @@ export default function ProjectsPage() {
                   : 'cubic-bezier(0.34, 1.56, 0.64, 1)'
               }
               maskOpacity={0.5}
-              toolbarRender={({ onScale, scale }) => {
-                return (
-                  <>
-                    <svg
-                      className='PhotoView-Slider__toolbarIcon'
-                      onClick={() => onScale(scale + 1)}
-                    />
-                    <svg
-                      className='PhotoView-Slider__toolbarIcon'
-                      onClick={() => onScale(scale - 1)}
-                    />
-                  </>
-                );
-              }}
             >
               <PhotoView src={item.imageUrl}>
                 <Image

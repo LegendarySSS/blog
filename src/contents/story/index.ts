@@ -64,6 +64,14 @@ const items = [
     content:
       '跟女朋友在家研究创业项目，想到在老家吃过的一个地摊麻辣烫，于是便斥巨资买材料，自己先做了一顿，剩余的塞了满满一冰箱，吃完之后开始盘算成本以及利润，怎么算都挣不到钱...',
   },
+  {
+    id: 9,
+    imageUrl:
+      'https://telegraph-image-9jg.pages.dev/file/AgACAgEAAyEGAASNsUhIAAMpZ1lAJSoOdxzXrxTES8dWwky360oAAmGuMRvng8hG5Sui8idsGR4BAAMCAAN3AAM2BA.jpeg',
+    title: '生日礼物',
+    content:
+      '24岁的某一天，组里的同事告诉我说给我准备了生日礼物，突然想到生日已经过去十几天了，不过还是挺惊喜，选手办的时候凭意念抽到了隐藏款的盲盒，还挺帅哈哈',
+  },
 ];
 
 export default items;

@@ -69,7 +69,6 @@ const Player = () => {
     setCurrentSongIndex(index);
     setIsPlaying(true);
   };
-
   return (
     <div
       className={`fixed bottom-4 rounded-full right-4 ${

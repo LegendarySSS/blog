@@ -4,6 +4,12 @@
 import { useEffect } from 'react';
 
 const useCanvasCursor = () => {
+  const isBrowser = typeof window !== 'undefined';
+  const isMobile = isBrowser && window.navigator.userAgent.includes('Mobile');
+
+  if (isMobile) {
+    return;
+  }
   function n(e) {
     this.init(e || {});
   }
@@ -175,6 +181,7 @@ const useCanvasCursor = () => {
     resizeCanvas();
   };
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     renderCanvas();
 
