@@ -13,38 +13,46 @@ export default function ProjectsPage() {
     <Layout>
       <Seo templateTitle='碎碎念' />
       <main className='column-layout w-full'>
-        {items.map((item) => (
-          <div
-            key={item.id}
-            className='shadow-md bg-white rounded-lg break-inside-avoid mb-5 story-container'
-          >
-            <PhotoProvider
-              speed={() => 800}
-              easing={(type) =>
-                type === 2
-                  ? 'cubic-bezier(0.36, 0, 0.66, -0.56)'
-                  : 'cubic-bezier(0.34, 1.56, 0.64, 1)'
-              }
-              maskOpacity={0.5}
+        {items.map((item) => {
+          return (
+            <div
+              key={item.id}
+              className='shadow-md bg-white rounded-lg break-inside-avoid mb-5 story-container'
             >
-              <PhotoView src={item.imageUrl}>
-                <Image
-                  width={200}
-                  height={200}
-                  src={item.imageUrl}
-                  alt={item.title}
-                  className={clsx('m-auto mt-0 mb-4')}
-                />
-              </PhotoView>
-            </PhotoProvider>
-            <div className='p-4 pt-0'>
-              <h2 className='story-title font-medium text-2xl mb-1'>
-                {item.title}
-              </h2>
-              <div className='text-gray-500 italic'>{item.content}</div>
+              <PhotoProvider
+                speed={() => 800}
+                loadingElement={
+                  <div className='flex justify-center items-center'>
+                    <div className='w-16 h-16 border-4 border-gray-300 border-t-black rounded-full animate-spin'></div>
+                  </div>
+                }
+                easing={(type) =>
+                  type === 2
+                    ? 'cubic-bezier(0.36, 0, 0.66, -0.56)'
+                    : 'cubic-bezier(0.34, 1.56, 0.64, 1)'
+                }
+                maskOpacity={0.8}
+              >
+                <PhotoView src={item.imageUrl}>
+                  <Image
+                    loading='lazy'
+                    width={200}
+                    height={200}
+                    src={item.imageUrl}
+                    alt={item.title}
+                    className={clsx('m-auto mt-0 mb-4')}
+                  />
+                </PhotoView>
+              </PhotoProvider>
+              <div className='p-4 pt-0'>
+                <h2 className='story-title font-medium text-2xl mb-1'>
+                  {item.title}
+                </h2>
+                <div className='text-gray-500 italic'>{item.content}</div>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </main>
     </Layout>
   );

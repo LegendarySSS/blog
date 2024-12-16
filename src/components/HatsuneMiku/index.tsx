@@ -4,7 +4,6 @@ import * as React from 'react';
 import { createHatsuneMiku } from './createHatsuneMiku';
 
 export function HatsuneMiku() {
-  console.log('re-render');
   const ref = React.useRef<HTMLDivElement>(null);
   React.useEffect(() => {
     const head = document.querySelectorAll('head')[0];
