@@ -5,8 +5,4 @@
 module.exports = {
   /** Without additional '/' on the end */
   siteUrl: 'https://zhuminghao.netlify.app/',
-  generateRobotsTxt: true,
-  robotsTxtOptions: {
-    policies: [{ userAgent: '*', allow: '/' }],
-  },
 };
